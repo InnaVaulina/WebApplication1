@@ -1,0 +1,192 @@
+﻿@page "{tab:int}/{handler?}"
+@model AddressBook_0.Pages.EditModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+
+}
+
+
+<h1 class="head">Работа с элементом</h1>
+
+<div class="tabs">
+    
+@{
+    string tab1checked = "";
+    string tab2checked = "";
+    string tab3checked = "";
+        
+    switch (RouteData.Values["tab"].ToString())
+    {
+        case "2":
+            { tab2checked = "checked"; break; }
+        case "3":
+            { tab3checked = "checked"; break; }
+        default:
+            { tab1checked = "checked"; break; }
+    }
+
+    <input type="radio" name="tab-btn" id="tab-btn-1" value="" @tab1checked>
+    <label for="tab-btn-1">Просмотр</label>
+    <input type="radio" name="tab-btn" id="tab-btn-2" value="" @tab2checked>
+    <label for="tab-btn-2">Редактировать</label>
+    <input type="radio" name="tab-btn" id="tab-btn-3" value="" @tab3checked>
+    <label for="tab-btn-3">Удалить</label>
+}
+    
+    <section id="content-1" class="record-looking">
+        <h4>Запись &#8470;  @Html.DisplayFor(model => model.Note.Id)</h4>
+        <hr />
+        <dl class="attrs-table">
+            <div class="attrs-table__row">
+                <dt>
+                    Фамилия
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Note.FamilyName)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    Имя
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Note.Name)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    Отчество
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Note.PatronymicName)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    Телефон
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Note.Tel)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    Адрес
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Note.Address)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    Информация
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Note.Description)
+                </dd>
+            </div>
+        </dl>
+    </section>
+
+    <section id="content-2" class="record-change">
+        <h4>Запись &#8470;  @Html.DisplayFor(model => model.Note.Id)</h4>
+        <hr />
+        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" method="post">
+            <fieldset>
+                <legend>Изменение записи</legend>
+                <p style="display:none">
+                    <label asp-for="Note.Id" class="form__label">Id</label>
+                    <input type="text" asp-for="Note.Id" minlength="1" maxlength="50" size="30" class="form__element">
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.FamilyName" class="form__label">Фамилия</label>
+                    <input type="text" asp-for="Note.FamilyName" minlength="1" maxlength="50" size="30" placeholder="Фамилия" required class="form__element">    
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.Name" class="form__label">Имя</label>
+                    <input type="text" asp-for="Note.Name" minlength="1" maxlength="50" size="30" placeholder="Имя" required class="form__element">
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.PatronymicName" class="form__label">Отчество</label>
+                    <input type="text" asp-for="Note.PatronymicName" minlength="1" maxlength="50" size="30" placeholder="Отчетсво" class="form__element">
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.Tel" class="form__label">Телефон</label>
+                    <input type="tel" asp-for="Note.Tel" minlength="1" maxlength="20" size="20" placeholder="Телефон" required class="form__element">
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.Address" class="form__label-text">Адрес</label>
+                    <textarea asp-for="Note.Address" cols="50" rows="2" placeholder="Адрес" class="form__element">
+                        @Html.DisplayFor(model => model.Note.Address)
+                    </textarea>
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.Description" class="form__label-text">Описание</label>
+                    <textarea asp-for="Note.Description" cols="50" rows="4" placeholder="Описание" class="form__element">
+                        @Html.DisplayFor(model => model.Note.Description)
+                    </textarea>
+                </p>
+                <p class="form__item">
+                    <input type="submit" asp-page-handler="ChangeNote" value="Сохранить изменения" class="form__button">
+                </p>
+            </fieldset>
+        </form>
+    </section>
+
+    <section id="content-3" class="record-delete">
+        <h4>Запись &#8470;  @Html.DisplayFor(model => model.Note.Id)</h4>
+        <hr />
+        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" method="post">
+            <fieldset>
+                <legend>Вы действительно хотите удалить это?</legend>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                ФИО
+                            </th>
+                            <th>
+                                Информация
+                            </th>                               
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Note.FamilyName)
+                                @Html.DisplayFor(model => model.Note.Name)
+                                @Html.DisplayFor(model => model.Note.PatronymicName)
+                            </td>
+                            <td>
+                                <p>
+                                    @Html.DisplayFor(model => model.Note.Tel)
+                                </p>
+                                <p>
+                                    @Html.DisplayFor(model => model.Note.Address)
+                                </p>
+                                <p>
+                                    @Html.DisplayFor(model => model.Note.Description)
+                                </p>        
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="display:none">
+                    <input type="text" asp-for="Note.Id">
+                    <input type="text" asp-for="Note.FamilyName">
+                    <input type="text" asp-for="Note.Name">
+                    <input type="tel" asp-for="Note.Tel">
+                </p>
+                <p class="form__item">
+                    <input type="submit" asp-page-handler="DeleteNote" value="Удалить" class="form__button">
+                </p>
+            </fieldset>
+        </form>
+    </section>
+
+</div>
+

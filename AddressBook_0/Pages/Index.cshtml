@@ -1,0 +1,109 @@
+﻿@page
+@model AddressBook_0.Pages.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="head">Работа со списком</h1>
+
+
+<div class="tabs">
+    <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+    <label for="tab-btn-1">Просмотр</label>
+    <input type="radio" name="tab-btn" id="tab-btn-2" value="">
+    <label for="tab-btn-2">Добавить запись</label>
+    <input type="radio" name="tab-btn" id="tab-btn-3" value="">
+    <label for="tab-btn-3">Поиск</label>
+    <section id="content-1" class="record-looking">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Фамилия
+                    </th>
+                    <th>
+                        Имя
+                    </th>
+                    <th>
+                        Отчество
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Notes)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FamilyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatronymicName)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-tab="1" asp-route-id="@item.Id">Подробно</a>|
+                            <a asp-page="./Edit" asp-route-tab="2" asp-route-id="@item.Id">Изменить</a>|
+                            <a asp-page="./Edit" asp-route-tab="3" asp-route-id="@item.Id">Удалить</a>
+                        </td>
+                    
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+    <section id="content-2" class="record-adding">
+        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" method="post" action="">
+            <fieldset>
+                <legend>Добавление записи</legend>
+                <p class="form__item">
+                    <label asp-for="Note.FamilyName" class="form__label">Фамилия</label>
+                    <input type="text" asp-for="Note.FamilyName" minlength="1" maxlength="50" size="30" placeholder="Фамилия" required class="form__element">
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.Name" class="form__label">Имя</label>
+                    <input type="text" asp-for="Note.Name" minlength="1" maxlength="50" size="30" placeholder="Имя" required class="form__element">
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.PatronymicName" class="form__label">Отчество</label>
+                    <input type="text" asp-for="Note.PatronymicName" minlength="1" maxlength="50" size="30" placeholder="Отчетсво" class="form__element">
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.Tel" class="form__label">Телефон</label>
+                    <input type="tel" asp-for="Note.Tel" minlength="1" maxlength="20" size="20" placeholder="Телефон" required class="form__element">
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.Address" class="form__label-text">Адрес</label>
+                    <textarea asp-for="Note.Address" cols="50" rows="2" placeholder="Адрес" class="form__element"></textarea>
+                </p>
+                <p class="form__item">
+                    <label asp-for="Note.Description" class="form__label-text">Описание</label>
+                    <textarea asp-for="Note.Description" cols="50" rows="4" placeholder="Описание" class="form__element"></textarea>
+                </p>
+                <p class="form__item">
+                    <input type="submit" asp-page="Index" value="Сохранить" class="form__button">
+                </p>
+
+            </fieldset>
+        </form>
+    </section>
+    <section id="content-3" class="record-found">
+        тут пока ничего нет
+    </section>
+
+</div>
+
+
+
+

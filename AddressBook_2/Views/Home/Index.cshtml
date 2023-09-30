@@ -1,0 +1,107 @@
+﻿@model IEnumerable<AddressBook_2mvc.Models.Note>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="head">Работа со списком</h1>
+
+
+<div class="tabs">
+    <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+    <label for="tab-btn-1">Просмотр</label>
+    <input type="radio" name="tab-btn" id="tab-btn-2" value="">
+    <label for="tab-btn-2">Добавить запись</label>
+    <input type="radio" name="tab-btn" id="tab-btn-3" value="">
+    <label for="tab-btn-3">Поиск</label>
+    <section id="content-1" class="record-looking">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id) 
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FamilyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PatronymicName)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.FamilyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.PatronymicName)
+                        </td>
+                        <td>
+                            <a asp-action="Single" asp-route-tab="Details" asp-route-id="@item.Id">Подробно</a>|
+                            <a asp-action="Single" asp-route-tab="Edit" asp-route-id="@item.Id">Изменить</a>|
+                            <a asp-action="Single" asp-route-tab="Delete" asp-route-id="@item.Id">Удалить</a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </section>
+    <section id="content-2" class="record-adding">
+        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" method="post" asp-action="AddNote">
+            <fieldset>
+                <legend>Добавление записи</legend>
+                
+                <p class="form__item">
+                    <label for="FamilyName" class="form__label">Фамилия</label>
+                    <input type="text" name="FamilyName" minlength="1" maxlength="50" size="30" placeholder="Фамилия" required class="form__element">
+                </p>
+                <p class="form__item">
+                    <label for="Name" class="form__label">Имя</label>
+                    <input type="text" name="Name" minlength="1" maxlength="50" size="30" placeholder="Имя" required class="form__element">
+                </p>
+                <p class="form__item">
+                    <label for="PatronymicName" class="form__label">Отчество</label>
+                    <input type="text" name="PatronymicName" minlength="1" maxlength="50" size="30" placeholder="Отчетсво" class="form__element">
+                </p>
+                <p class="form__item">
+                    <label for="Tel" class="form__label">Телефон</label>
+                    <input type="tel" name="Tel" minlength="1" maxlength="20" size="20" placeholder="Телефон" required class="form__element">
+                </p>
+                <p class="form__item">
+                    <label for="Address" class="form__label-text">Адрес</label>
+                    <textarea name="Address" cols="50" rows="2" placeholder="Адрес" class="form__element"></textarea>
+                </p>
+                <p class="form__item">
+                    <label for="Description" class="form__label-text">Описание</label>
+                    <textarea name="Description" cols="50" rows="4" placeholder="Описание" class="form__element"></textarea>
+                </p>
+                <p class="form__item">
+                    <input type="submit" value="Сохранить" class="form__button">
+                </p>
+                
+            </fieldset>
+        </form>
+    </section>
+    <section id="content-3" class="record-found">
+        тут пока ничего нет
+    </section>
+
+</div>
+

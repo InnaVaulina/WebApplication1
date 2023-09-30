@@ -1,0 +1,44 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"] - AddressBook</title>
+    <link rel="stylesheet" href="~/css/normalize.css">
+    <link rel="stylesheet" href="~/css/16.7%20bootstrap-grid.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header__content">
+            <a class="logo" asp-area="" asp-page="/Index">Записная книжка</a>
+            
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a class="nav__link" asp-area="" asp-page="/Index">На главную</a>
+                    </li>
+                    <li class="nav__item">
+                        <a class="nav__link" asp-area="" asp-page="">Помощь</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            @RenderBody()
+        </main>
+    </div>
+    
+
+    <footer class="footer">
+        <div class="container">
+            Записная книжка
+        </div>
+    </footer>
+</body>
+</html>

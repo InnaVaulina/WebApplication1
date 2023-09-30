@@ -1,0 +1,202 @@
+﻿@model AddressBook_2mvc.Models.Note
+
+
+
+@{
+    ViewData["Title"] = "Single";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1 class="head">Работа с элементом</h1>
+
+<div class="tabs">
+    
+@{
+    string tab1checked = "";
+    string tab2checked = "";
+    string tab3checked = "";
+        
+    switch (ViewData["Tab"])
+    {
+        case "Details":
+            { tab1checked = "checked"; break; }
+        case "Edit":
+            { tab2checked = "checked"; break; }
+        case "Delete":
+            { tab3checked = "checked"; break; }
+        default:
+            { tab1checked = "checked"; break; }
+    }
+
+    <input type="radio" name="tab-btn" id="tab-btn-1" value="" @tab1checked>
+    <label for="tab-btn-1">Просмотр</label>
+    <input type="radio" name="tab-btn" id="tab-btn-2" value="" @tab2checked>
+    <label for="tab-btn-2">Редактировать</label>
+    <input type="radio" name="tab-btn" id="tab-btn-3" value="" @tab3checked>
+    <label for="tab-btn-3">Удалить</label>
+}
+    
+    <section id="content-1" class="record-looking">
+        <h4>Запись &#8470;  @Html.DisplayFor(model => model.Id)</h4>
+        <hr />
+        <dl class="attrs-table">
+            <div class="attrs-table__row">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FamilyName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FamilyName)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    @Html.DisplayNameFor(model => model.PatronymicName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PatronymicName)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Tel)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Tel)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+            </div>
+            <div class="attrs-table__row">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+            </div>
+        </dl>
+    </section>
+    
+    <section id="content-2" class="record-change">
+        <h4>Запись &#8470;  @Html.DisplayFor(model => model.Id)</h4>
+        <hr />
+        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" method="post" asp-action="ChangeNote">
+            <fieldset>
+                <legend>Изменение записи</legend>
+                <p style="display:none">
+                    <input type="text" name="Id" class="form__element"
+                           value="@Html.DisplayFor(Model => Model.Id)">
+                </p>
+                <p class="form__item">
+                    <label for="FamilyName" class="form__label">@Html.DisplayNameFor(model => model.FamilyName)</label>
+                    <input type="text" name="FamilyName" minlength="1" maxlength="50" size="30" required class="form__element"
+                        placeholder="@Html.DisplayNameFor(model => model.FamilyName)" 
+                        value="@Html.DisplayFor(Model => Model.FamilyName)">
+                </p>
+                <p class="form__item">
+                    <label for="Name" class="form__label">@Html.DisplayNameFor(model => model.Name)</label>
+                    <input type="text" name="Name" minlength="1" maxlength="50" size="30" required class="form__element"
+                        placeholder="@Html.DisplayNameFor(model => model.Name)" 
+                        value="@Html.DisplayFor(Model => Model.Name)">
+                </p>
+                <p class="form__item">
+                    <label for="PatronymicName" class="form__label">@Html.DisplayNameFor(model => model.PatronymicName)</label>
+                    <input type="text" name="PatronymicName" minlength="1" maxlength="50" size="30" class="form__element"
+                        placeholder="@Html.DisplayNameFor(model => model.PatronymicName)"
+                        value="@Html.DisplayFor(Model => Model.PatronymicName)">
+                </p>
+                <p class="form__item">
+                    <label for="Tel" class="form__label">@Html.DisplayNameFor(model => model.Tel)</label>
+                    <input type="tel" name="Tel" minlength="1" maxlength="20" size="20" required class="form__element"
+                        placeholder="@Html.DisplayNameFor(model => model.Tel)"
+                        value="@Html.DisplayFor(Model => Model.Tel)">
+                </p>
+                <p class="form__item">
+                    <label for="Address" class="form__label-text">@Html.DisplayNameFor(model => model.Address)</label>
+                    <textarea name="Address" cols="50" rows="2" class="form__element"
+                        placeholder="@Html.DisplayNameFor(model => model.Address)">
+                        @Html.DisplayFor(model => model.Address)
+                    </textarea>
+                </p>
+                <p class="form__item">
+                    <label for="Description" class="form__label-text">@Html.DisplayNameFor(model => model.Description)</label>
+                    <textarea name="Description" cols="50" rows="4" class="form__element"
+                        placeholder="@Html.DisplayNameFor(model => model.Description)" >
+                        @Html.DisplayFor(model => model.Description)
+                    </textarea>
+                </p>
+                <p class="form__item">
+                    <input type="submit" value="Сохранить изменения" class="form__button">
+                </p>
+            </fieldset>
+        </form>
+    </section>
+    
+    <section id="content-3" class="record-delete">
+        <h4>Запись &#8470;  @Html.DisplayFor(model => model.Id)</h4>
+        <hr />
+        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" method="post" asp-action="DeleteNote">
+            <fieldset>
+                <legend>Вы действительно хотите удалить это?</legend>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                ФИО
+                            </th>
+                            <th>
+                                Информация
+                            </th>                               
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.FamilyName)
+                                @Html.DisplayFor(model => model.Name)
+                                @Html.DisplayFor(model => model.PatronymicName)
+                            </td>
+                            <td>
+                                <p>
+                                    @Html.DisplayFor(model => model.Tel)
+                                </p>
+                                <p>
+                                    @Html.DisplayFor(model => model.Address)
+                                </p>
+                                <p>
+                                    @Html.DisplayFor(model => model.Description)
+                                </p>        
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="display:none">
+                    <input type="text" asp-for="Id">
+                    <input type="text" asp-for="FamilyName">
+                    <input type="text" asp-for="Name">
+                    <input type="tel" asp-for="Tel">
+                </p>
+                <p class="form__item">
+                    <input type="submit" value="Удалить" class="form__button">
+                </p>
+            </fieldset>
+        </form>
+    </section>
+    
+
+</div>
