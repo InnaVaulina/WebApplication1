@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Text.Json;
-using AddressBook_2mvc.Models;
+﻿using System.Text.Json;
+using AddressBook_0.Models;
 
-namespace AddressBook_2mvc.Data
+namespace AddressBook_0.Data
 {
     public class NotesSaver
     {
-
         private string fileName;
 
         private int maxkey;
         public int MaxKey { get { return maxkey; } }
-
 
 
         public NotesSaver(string filename)
@@ -19,6 +16,7 @@ namespace AddressBook_2mvc.Data
             this.fileName = filename;
             maxkey = 0;
         }
+
 
         public void SaveNotes(List<Note> notes)
         {
@@ -37,11 +35,11 @@ namespace AddressBook_2mvc.Data
             if (File.Exists(fileName))
             {
                 string data = File.ReadAllText(fileName);
-                notes = JsonSerializer.Deserialize<List< Note >>(data);   
+                notes = JsonSerializer.Deserialize<List<Note>>(data);
             }
-            foreach(var item in notes) 
+            foreach (var item in notes)
             {
-                if (maxkey < item.Id) 
+                if (maxkey < item.Id)
                     maxkey = item.Id;
             }
             return notes;
