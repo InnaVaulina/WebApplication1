@@ -1,65 +1,96 @@
 ﻿using AddressBook_2mvc.Models;
 using AddressBook_2mvc.Data;
 using Microsoft.AspNetCore.Mvc;
+using AddressBook_2mvc.AddressBookException;
+using Microsoft.EntityFrameworkCore;
+using AddressBook_2mvc.ViewData;
+using System.Diagnostics.Metrics;
 
 namespace AddressBook_2mvc.Controllers
 {
     public class HomeController : Controller
     {
 
-        private readonly INotesCollection _context;
+        private readonly INotesCollection _collection;
+        private readonly IAddressBookDBContex _context;
+        private readonly IIndexViewData _viewLetterPage;
 
-
-        public HomeController(INotesCollection context)
+        public HomeController(INotesCollection collection, 
+                              IAddressBookDBContex context, 
+                              IIndexViewData viewLetterPage)
         {
+            _collection = collection;
             _context = context;
-        }
-
-        
-        public IActionResult Index()
-        {
-            return View(_context.Notes);
-        }
-
-        [HttpPost]
-        public IActionResult AddNote(Note note)
-        {
-            _context.AddNote(note);
-
-            return RedirectToAction("Index");
+            _viewLetterPage = viewLetterPage;
         }
 
 
-
-        [HttpGet("{tab}/{id}")]
-        public IActionResult Single(string tab, int id)
+        [HttpGet("{letter?}")]
+        public async Task<IActionResult> Index(string letter)
         {
-
-            var note = _context.SearchNote(id);
-
-            if (note == null)
+            if (letter != null) 
+                _viewLetterPage.ChooseLetter(letter); 
+            
+            List<Note> notelist;
+            try
             {
-                return NotFound();
+                notelist = await _collection.SelectList(_context, _viewLetterPage);
+                if(notelist.Count == 0 && _viewLetterPage.Page>0) 
+                {
+                    _viewLetterPage.ChooseLetter("left");
+                    notelist = await _collection.SelectList(_context, _viewLetterPage);
+                }
+            }
+            catch (CustomException ex)
+            {
+                return NotFound(ex.Message);
             }
 
-            ViewData["Tab"] = tab;
+            ViewData["Letter"] = _viewLetterPage.Letter;
 
-            return View(note);
+            return View(notelist);
         }
 
 
         [HttpPost]
-        public IActionResult ChangeNote(Note note)
+        public async Task<IActionResult> AddNote(Note note)
         {
-            _context.ChangeNote(note);
-            return RedirectToAction("Single",new { tab = "Details", id = note.Id });
-        }
+            try
+            {
+                await _collection.AddNote(_context, note);
+            }
+            catch (CustomException ex)
+            {
+                return NotFound(ex.Message);
+            }
 
-        [HttpPost]
-        public IActionResult DeleteNote(Note note)
-        {
-            _context.DeleteNote(note.Id);
             return RedirectToAction("Index");
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Retrieval(Clue clue)
+        {
+            List<Note> notelist;
+
+            if (clue.ClueText != null || clue.ClueText != "")
+            {
+                try
+                {
+                    notelist = await _collection.SelectList(_context, clue.ClueText);
+                }
+                catch (CustomException ex)
+                {
+                    return NotFound(ex.Message);
+                }
+            }
+            else
+                notelist = new List<Note>();
+
+            return View("Retrieval", notelist);
+        }
+
     }
+
+
 }

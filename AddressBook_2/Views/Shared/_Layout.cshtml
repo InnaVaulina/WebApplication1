@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/16.7%20bootstrap-grid.min.css">
     <link rel="stylesheet" href="../css/style.css">
+
 </head>
 <body>
+    
     <header class="header">
         <div class="container header__content">
             <a class="logo" asp-action="Index">Записная книжка</a>
@@ -17,7 +19,7 @@
             <nav class="nav">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a class="nav__link" asp-action="Index">На главную</a>
+                        <a class="nav__link" asp-controller="Home" asp-action="Index">На главную</a>
                     </li>
                     <li class="nav__item">
                         <a class="nav__link" asp-action="">Помощь</a>
@@ -39,5 +41,6 @@
             Записная книжка
         </div>
     </footer>
+    
 </body>
 </html>

@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressBook_0", "AddressBoo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressBook_2mvc", "AddressBook_2\AddressBook_2mvc.csproj", "{9E71308A-E8DB-48E5-98AC-EAE99CC0AD7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{A3BE536B-13F1-464E-8ABE-3BB616E88DCA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9E71308A-E8DB-48E5-98AC-EAE99CC0AD7A} = {9E71308A-E8DB-48E5-98AC-EAE99CC0AD7A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +26,10 @@ Global
 		{9E71308A-E8DB-48E5-98AC-EAE99CC0AD7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E71308A-E8DB-48E5-98AC-EAE99CC0AD7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E71308A-E8DB-48E5-98AC-EAE99CC0AD7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3BE536B-13F1-464E-8ABE-3BB616E88DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3BE536B-13F1-464E-8ABE-3BB616E88DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3BE536B-13F1-464E-8ABE-3BB616E88DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3BE536B-13F1-464E-8ABE-3BB616E88DCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
