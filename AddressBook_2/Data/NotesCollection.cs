@@ -9,8 +9,8 @@ namespace AddressBook_2mvc.Data
     public interface INotesCollection
     {
         Task AddNote(IAddressBookDBContex _context, Note note);
-        Task ChangeNote(IAddressBookDBContex _context, Note note);
-        Task DeleteNote(IAddressBookDBContex _context, Note note);
+        Task ChangeNote(IAddressBookDBContex _context, int id, Note note);
+        Task DeleteNote(IAddressBookDBContex _context, int id);
         Note SearchNote(IAddressBookDBContex _context, int id);
         Task<List<Note>> SelectList(IAddressBookDBContex _context, IIndexViewData page);
         Task<List<Note>> SelectList(IAddressBookDBContex _context, string clue);
@@ -39,10 +39,10 @@ namespace AddressBook_2mvc.Data
 
     
 
-        public async Task ChangeNote(IAddressBookDBContex context, Note note)
+        public async Task ChangeNote(IAddressBookDBContex context, int id, Note note)
         {
             var desired = context.Note.
-                Where(n => n.Id == note.Id).
+                Where(n => n.Id == id).
                 FirstOrDefault();
 
             if (desired != null)
@@ -69,10 +69,10 @@ namespace AddressBook_2mvc.Data
     
 
 
-        public async Task DeleteNote(IAddressBookDBContex context, Note note)
+        public async Task DeleteNote(IAddressBookDBContex context, int id)
         {
             var desired = context.Note.
-                 Where(n => (n.Id == note.Id)).
+                 Where(n => (n.Id == id)).
                  FirstOrDefault();
             if (desired != null)
             {

@@ -29,12 +29,12 @@
             { tab1checked = "checked"; break; }
     }
 
-    <input type="radio" name="tab-btn" id="tab-btn-1" value="" @tab1checked>
-    <label for="tab-btn-1">Просмотр</label>
-    <input type="radio" name="tab-btn" id="tab-btn-2" value="" @tab2checked>
-    <label for="tab-btn-2">Редактировать</label>
-    <input type="radio" name="tab-btn" id="tab-btn-3" value="" @tab3checked>
-    <label for="tab-btn-3">Удалить</label>
+                <input type="radio" name="tab-btn" id="tab-btn-1" value="" @tab1checked>
+                <label for="tab-btn-1">Просмотр</label>
+                <input type="radio" name="tab-btn" id="tab-btn-2" value="" @tab2checked>
+                <label for="tab-btn-2">Редактировать</label>
+                <input type="radio" name="tab-btn" id="tab-btn-3" value="" @tab3checked>
+                <label for="tab-btn-3">Удалить</label>
 }
     
     <section id="content-1" class="record-looking">
@@ -96,7 +96,7 @@
         <h4>Запись &#8470;  @Html.DisplayFor(model => model.Id)</h4>
         <hr />
         
-        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" method="post" asp-action="ChangeNote">
+        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" id="sendform">
             <fieldset>
 
                 <legend>Изменение записи</legend>
@@ -147,12 +147,51 @@
                 </p>
             </fieldset>
         </form>
+        <script>
+
+            sendform.onsubmit = (e) => {
+                e.preventDefault();
+                
+
+                var requestData = {
+                    FamilyName: sendform.elements.FamilyName.value,
+                    Name: sendform.elements.Name.value,
+                    PatronymicName: sendform.elements.PatronymicName.value,
+                    Tel: sendform.elements.Tel.value,
+                    Address: sendform.elements.Address.value,
+                    Description: sendform.elements.Description.value
+                };
+
+                let id = sendform.elements.Id;
+                fetch(`/Single/ChangeNote/${id.value}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                })
+                    .then( response => {
+                        if (response.redirected) {
+                            window.location.href = response.url;
+                        } else {
+                            if (response.ok) { } else { }
+                            // Обработка ошибок 
+                        }
+                    })
+                    .catch( error => {
+                        console.error('Ошибка:', error);
+                    });
+                
+            };
+
+
+        </script>
     </section>
     
     <section id="content-3" class="record-delete">
         <h4>Запись &#8470;  @Html.DisplayFor(model => model.Id)</h4>
         <hr />
-        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" method="post" asp-action="DeleteNote">
+        <form class="form col-12 col-sm-12 col-md-12 col-lg-6" id="deleteform">
             <fieldset>
                 <legend>Вы действительно хотите удалить это?</legend>
                 <table class="table">
@@ -187,17 +226,37 @@
                         </tr>
                     </tbody>
                 </table>
-                <p style="display:none">
-                    <input type="text" asp-for="Id">
-                    <input type="text" asp-for="FamilyName">
-                    <input type="text" asp-for="Name">
-                    <input type="tel" asp-for="Tel">
-                </p>
+                
                 <p class="form__item">
                     <input type="submit" value="Удалить" class="form__button">
                 </p>
             </fieldset>
         </form>
+        <script>
+
+            deleteform.onsubmit = (e) => {
+                e.preventDefault();
+
+                let id = @Html.DisplayFor(model => model.Id);
+                fetch(`/Single/DeleteNote/${id}`, {
+                    method: 'DELETE'   
+                })
+                    .then(response => {
+                        if (response.redirected) {
+                            window.location.href = response.url;
+                        } else {
+                            if (response.ok) { } else { }
+                            // Обработка ошибок
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                    });
+
+            };
+
+
+        </script>
     </section>
     
 

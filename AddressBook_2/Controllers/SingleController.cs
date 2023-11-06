@@ -16,6 +16,8 @@ namespace AddressBook_2mvc.Controllers
             _context = context;
         }
 
+
+
         [HttpGet("{tab}/{id}")]
         public IActionResult Single(string tab, int id)
         {
@@ -42,30 +44,29 @@ namespace AddressBook_2mvc.Controllers
 
 
 
-        [HttpPost]
-        public async Task<IActionResult> ChangeNote(Note note)
+        [HttpPut]
+        public async Task<IActionResult> ChangeNote(int id, [FromBody] Note note)
         {
             try
             {
-                await _collection.ChangeNote(_context, note);
+                await _collection.ChangeNote(_context, id, note);
             }
             catch (CustomException ex)
             {
                 return NotFound(ex.Message);
             }
 
-            return RedirectToAction("Single", new { tab = "Details", id = note.Id });
+            return RedirectToActionPermanent("Single", new { tab = "Details", id = id });
+            
         }
 
 
-
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteNote(Note note)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteNote(int id)
         {
             try
             {
-                await _collection.DeleteNote(_context, note);
+                await _collection.DeleteNote(_context, id);
             }
             catch (CustomException ex)
             {

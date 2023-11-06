@@ -2,6 +2,7 @@ using AddressBook_2mvc.Data;
 using AddressBook_2mvc.ViewData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,10 @@ builder.Services.AddSingleton<INotesCollection, NotesCollection>();
 builder.Services.AddSingleton<IIndexViewData, IndexViewData>();
 
 builder.Services.AddControllersWithViews();
+
+//builder.Services.AddControllersWithViews(o =>
+//    o.RespectBrowserAcceptHeader = true
+//    ).AddNewtonsoftJson();
 
 
 var app = builder.Build();
