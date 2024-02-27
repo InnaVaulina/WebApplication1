@@ -1,10 +1,12 @@
 ﻿using AddressBook_2mvc.AddressBookException;
 using AddressBook_2mvc.Data;
 using AddressBook_2mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AddressBook_2mvc.Controllers
 {
+    [Authorize]
     public class SingleController: Controller
     {
         private readonly INotesCollection _collection;
@@ -19,6 +21,8 @@ namespace AddressBook_2mvc.Controllers
 
 
         [HttpGet("{tab}/{id}")]
+        [AllowAnonymous]
+        [Route("Single/Single")]
         public IActionResult Single(string tab, int id)
         {
             if (tab == null || id < 0)
@@ -45,6 +49,7 @@ namespace AddressBook_2mvc.Controllers
 
 
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> ChangeNote(int id, [FromBody] Note note)
         {
             try
@@ -62,6 +67,7 @@ namespace AddressBook_2mvc.Controllers
 
 
         [HttpDelete]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteNote(int id)
         {
             try

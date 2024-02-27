@@ -5,9 +5,12 @@ using AddressBook_2mvc.AddressBookException;
 using Microsoft.EntityFrameworkCore;
 using AddressBook_2mvc.ViewData;
 using System.Diagnostics.Metrics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace AddressBook_2mvc.Controllers
 {
+    
     public class HomeController : Controller
     {
 
@@ -26,6 +29,8 @@ namespace AddressBook_2mvc.Controllers
 
 
         [HttpGet("{letter?}")]
+        [AllowAnonymous]
+        [Route("Home/Index")]
         public async Task<IActionResult> Index(string letter)
         {
             if (letter != null) 
@@ -45,14 +50,17 @@ namespace AddressBook_2mvc.Controllers
             {
                 return NotFound(ex.Message);
             }
-
+  
+           
             ViewData["Letter"] = _viewLetterPage.Letter;
+            
 
             return View(notelist);
         }
 
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddNote(Note note)
         {
             try
@@ -69,6 +77,7 @@ namespace AddressBook_2mvc.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Retrieval(Clue clue)
         {
             List<Note> notelist;

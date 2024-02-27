@@ -1,6 +1,6 @@
-﻿using AddressBook_2mvc.Controllers;
-using AddressBook_2mvc.Data;
-using AddressBook_2mvc.Models;
+﻿//using AddressBook_2mvc.Controllers;
+//using AddressBook_2mvc.Data;
+//using AddressBook_2mvc.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;

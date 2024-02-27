@@ -105,12 +105,17 @@ body {
 	display: none;
 }
 
+.area {
+	min-height: 82vh;
+}
 
+.row{
+	padding-top: 20px;
+}
 
 
 .tabs {
 	font-size: 0;
-	min-height: 82vh;
 }
 
 .tabs>input[type="radio"] {
@@ -127,10 +132,13 @@ body {
 }
 
 /* отобразить контент, связанный с вабранной радиокнопкой (input type="radio") */
-#tab-btn-1:checked~#content-1,
-#tab-btn-2:checked~#content-2,
-#tab-btn-3:checked~#content-3 {
-  display: block;
+#tab-btn-records:checked ~ #content-records,
+#tab-btn-adding:checked ~ #content-adding,
+#tab-btn-searching:checked ~ #content-searching,
+#tab-btn-single:checked ~ #content-single,
+#tab-btn-edit:checked ~ #content-edit,
+#tab-btn-delete:checked ~ #content-delete {
+	display: block;
 }
 
 
@@ -297,6 +305,11 @@ dt:after {
 	background-color: #e4dff1;
 	border: 1px solid #8a7f7f;
 	display: flex;
+}
+
+
+.area {
+	min-height: 82vh;
 }
 
 

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<AddressBook_2mvc.IdentityModel.UserModel>
+
+
+@{
+    ViewData["Title"] = "AdminPage";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="head">Страница администратора</h1>
+
+<div class="tabs area">
+    <input type="radio" name="tab-btn" id="tab-btn-records" value="" checked>
+    <label for="tab-btn-records">Список польователей</label>
+
+    <input type="radio" name="tab-btn" id="tab-btn-adding" value="">
+    <label for="tab-btn-adding">Добавить запись</label>
+
+    <section id="content-records" class="record-looking">
+
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserRole)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.UserRole)
+                        </td>
+                        <td>
+                            <form form asp-action="DeleteUser" asp-antiforgery="true" method="post">
+                                <div style="display:none">
+                                    <input type="text" name="Id" class="form__element"
+                                           value="@Html.DisplayFor(Model => item.Id)">
+                                    
+                                </div>
+                                <div class="text-center col-xs-12">
+                                    <input type="submit" value="Удалить" class="btn btn-default">
+                                </div>
+                            </form>
+
+
+
+                            <form form asp-action="ChangeUserRole" asp-antiforgery="true" method="post">
+                                <div style="display:none">
+                                    <input type="text" name="Id" class="form__element"
+                                           value="@Html.DisplayFor(Model => item.Id)">                 
+                                    <input type="text" name="Role" class="form__element"
+                                           value="@Html.DisplayFor(Model => item.UserRole)">
+                                </div>
+                                <div class="text-center col-xs-12">
+                                    <input type="submit" value="Изменить роль" class="btn btn-default">
+                                </div>
+                            </form>
+                            
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </section>
+    <section id="content-adding" class="record-adding">
+
+        <form asp-action="AddUser" asp-antiforgery="true" class="form">
+            <fieldset>
+
+                <legend>Регистрация</legend>
+
+
+                <p class="form__item">
+                    <label for="LoginProp" class="form__label">Логин</label>
+                    <input type="text" name="LoginProp" minlength="1" maxlength="20" size="20" required class="form__element"
+                           placeholder="Логин">
+                </p>
+
+                
+
+                <p class="form__item">
+                    <label for="Password" class="form__label">Пароль</label>
+                    <input type="text" name="Password" minlength="1" maxlength="20" size="20" required class="form__element"
+                           placeholder="Пароль">
+                </p>
+
+                <p class="form__item">
+                    <label for="ConfirmPassword" class="form__label">Пароль</label>
+                    <input type="text" name="ConfirmPassword" minlength="1" maxlength="20" size="20" required class="form__element"
+                           placeholder="Продублируйте пароль">
+                </p>
+
+                <p class="form__item">
+                    <input type="submit" value="Зарегистрировать" class="form__button">
+                </p>
+            </fieldset>
+        </form>
+
+    </section>
+</div>
